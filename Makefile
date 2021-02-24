@@ -4,7 +4,7 @@ OBJ_DIR	:= obj/
 BIN_DIR	:= bin/
 
 NAME	:= $(BIN_DIR)libasm.a
-SRC		:= main.c
+SRC		:= $(SRC_DIR)main.c
 SRC_ASM	:= $(SRC_DIR)ft_strlen.s\
 	$(SRC_DIR)ft_strcpy.s\
 	$(SRC_DIR)ft_strcmp.s\
@@ -17,7 +17,7 @@ OBJ		:= $(SRC:$(SRC_DIR)%.c=$(OBJ_DIR)%.o)
 
 CC		:= gcc
 CFLAGS	:= -Wall -Wextra -Werror
-INCLUDE	:= -Ilibasm.h
+INCLUDE	:= -I$(INC_DIR)
 LDFLAGS	:=
 
 .PHONY: all clean fclean re
@@ -27,18 +27,18 @@ all: $(NAME)
 	$(info "/bin/libasm.a rdy 2 use)
 	$(info --------------------------------------------)
 
-$(NAME):  $(OBJ) $(OBJ_ASM) | $(BIN_DIR)
+$(NAME):  $(OBJ_ASM) | $(BIN_DIR)
 	ar rcs $@ $^
 	echo "$@ (exec) \033[32mcreated\033[0m"
 	echo "--------------------------------------------"
 
 $(OBJ_DIR)%.o: $(SRC_DIR)%.s $(INC_DIR)libasm.h | $(OBJ_DIR)
-	nasm -f macho64 -c $< -o $@
+	nasm -f macho64 $< -o $@
 	echo "$@ \033[32mcreated\033[0m"
 
-$(OBJ_DIR)%.o: $(SRC_DIR)%.c $(INC_DIR)libasm.h | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
-	echo "$@ \033[32mcreated\033[0m"
+proj: $(NAME)
+	$(CC) $(CFLAGS) $(INCLUDE) $(SRC) $(NAME) -o $(BIN_DIR)exec_libasm
+	$(info "/bin/exec_libasm rdy 2 use)
 
 $(BIN_DIR) $(OBJ_DIR):
 	mkdir -p $@

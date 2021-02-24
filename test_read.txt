@@ -1,0 +1,2 @@
+This is a test for my ft_read.
+If it's work, I will be able to read this file from my main.
