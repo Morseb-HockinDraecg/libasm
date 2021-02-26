@@ -27,24 +27,22 @@ static void	local_str_len_cpy_cmp(void)
 	printf("\tft_strcpy\n\n");
 	strcpy(str1, "Ceci est un test ! ");
 	strcpy(str3, "Hello!:p");
-	str2[0] = '*';
 	ft_strcpy(str2, str1);
-	printf("strcmp str1|str2: %d\t|%s|\t|%s|\n", strcmp(str1, str2), str1, str2);
+	printf("cmp str1|str2: %d\t|%s|\t|%s|\n", strcmp(str1, str2), str1, str2);
 	ft_strcpy(str2, str3);
-	printf("strcmp str3|str2: %d\t|%s|\t|%s|\n", strcmp(str3, str2), str3, str2);
+	printf("cmp str3|str2: %d\t|%s|\t|%s|\n", strcmp(str3, str2), str3, str2);
 	printf("-------------------------------\n\n");
 	printf("\tft_strcmp\n\n");
-	printf("ft_strcmp str1|str2: %d\t|%s|\t|%s|\n", ft_strcmp(str1, str2), str1, str2);
-	printf("strcmp    str1|str2: %d\t|%s|\t|%s|\n", strcmp(str1, str2), str1, str2);
-	printf("ft_strcmp str1|str2: %d\t|%s|\t|%s|\n", ft_strcmp(str2, str1), str2, str1);
-	printf("strcmp    str1|str2: %d\t|%s|\t|%s|\n", strcmp(str2, str1), str2, str1);
-	printf("ft_strcmp str3|str2: %d\t|%s|\t|%s|\n", ft_strcmp(str3, str2), str3, str2);
-	printf("strcmp    str3|str2: %d\t|%s|\t|%s|\n", strcmp(str3, str2), str3, str2);
+	printf("cmp diff str1|str2: %d\t|%s|\t|%s|\n", ft_strcmp(str1, str2)\
+	- strcmp(str1, str2), str2, str1);
+	printf("cmp diff str1|str2: %d\t|%s|\t|%s|\n", ft_strcmp(str2, str1)\
+	- strcmp(str2, str1), str2, str1);
+	printf("cmp diff str3|str2: %d\t|%s|\t|%s|\n", ft_strcmp(str3, str2)\
+	- strcmp(str3, str2), str3, str2);
 }
 
 static void	local_strdup(void)
 {
-
 	char str1[50];
 	char *str2;
 	char str3[50];
@@ -64,7 +62,7 @@ static void	local_strdup(void)
 
 static void	local_write_and_read(char *file)
 {
-	int i;
+	int		i;
 	int		fd;
 	char	*buf;
 	int		ret;
@@ -79,7 +77,7 @@ static void	local_write_and_read(char *file)
 	fd = open(file, O_RDONLY);
 	buf = malloc(21);
 	if ((ret = ft_read(fd, buf, 200)) < 0)
-			return ;
+		return ;
 	buf[ret] = '\0';
 	printf("%s\n", buf);
 	free(buf);
